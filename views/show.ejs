@@ -1,0 +1,16 @@
+<h2>Blog Post</h2>
+
+<h3><%= post.title %></h3>
+<h2><%= post.author_id %><span class="posted_at"><%= post.publication_date %></span><span class="updated_at"><%= post.updated_date %></span></h2>
+
+<img src="<%= post.image_url %>" alt="" />
+
+<p><%= post.content %></p>
+
+
+<!-- <form action="/posts/<%= post.id %>" method="post">
+  <input type="hidden" value="delete" name="_method">
+  <button>delete</button>
+</form>
+
+<a href="/dishes/<%= dish.id %>/edit">edit dish</a> -->

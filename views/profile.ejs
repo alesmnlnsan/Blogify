@@ -1,0 +1,27 @@
+<h2>User Profile</h2>
+<div>
+  <p><strong>Name:</strong> <%= users.username %></p>
+  <p><strong>Email:</strong> <%= users.email %></p>
+  <p><strong>Pronouns:</strong> <%= users.pronouns %></p>
+
+</div>
+
+<h2>Blog Posts</h2>
+
+<% if (posts.length === 0) { %>
+  <p>No posts found.</p>
+<% } else { %>
+  <ul>
+    <% posts.forEach((post) => { %>
+      <li>
+        <h3><%= post.title %></h3>
+        <p><%= post.content %></p>
+        <p><strong>Publication Date:</strong> <%= post.publicationDate %></p>
+        <a href="/edit/<%= post.id %>">Edit</a>
+        <a href="/delete/<%= post.id %>">Delete</a>
+      </li>
+    <% }) %>
+  </ul>
+<% } %>
+
+<a href="/create">Create a new post</a>

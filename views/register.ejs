@@ -1,0 +1,38 @@
+<section class="form_container">
+    <h2>Sign Up</h2>
+    <% if (message) { %>
+    <p><%= message %></p>
+    <% } %>
+    <form action="/users" method="post">
+        <ul>
+            <li>
+                <label for="email">Email</label>
+                <input type="text" name="email" />
+                <span>Enter your email</span>
+            </li>
+            <li>
+                <label for="username">Username</label>
+                <input type="text" name="username" />
+                <span>Enter your username</span>
+            </li>
+            <li>
+                <label for="full_name">Name</label>
+                <input type="text" name="full_name" />
+                <span>Enter your display name</span>
+            </li>
+            <li>
+                <label for="">Password</label>
+                <input type="password" name="password" />
+                <span>Enter your password</span>
+            </li>
+            <li>
+                <label for="">Pronouns</label>
+                <input type="password" name="pronouns" />
+                <span>Enter your pronouns</span>
+            </li>
+            <li class="add-or-edit-btn">
+                <button>Signup</button>
+            </li>
+        </ul>
+    </form>
+</section>
