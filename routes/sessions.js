@@ -44,17 +44,18 @@ router.get('/profile', (req, res) => {
   
     const sql = 'SELECT * FROM users WHERE user_id = $1;';
     db.query(sql, [userId], (err, dbRes) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
+        if (err) {
+            console.log(err);
+            return;
+        }
   
-      const user = dbRes.rows[0];
-      const posts = dbRes.rows;
-
-    res.render('profile', { user, posts });
-  })
+        const user = dbRes.rows[0];
+        const posts = dbRes.rows;
+  
+        res.render('profile', { user: user, posts: posts });
+    });
 });
+
   
 router.delete('/logout', (req, res) => {
   req.session.user_Id = undefined;

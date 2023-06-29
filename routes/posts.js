@@ -82,6 +82,15 @@ router.put('/posts/:id', (req, res) => {
 
 })
 
+router.delete('/posts/:id', (req, res) => {
+  const postId = req.params.id;
+
+  const sql = 'DELETE FROM posts WHERE post_id = $1;';
+  db.query(sql, [postId], (err, dbRes) => {
+    res.redirect('/profile')
+  });
+});
+
 
 //other pages of the blog website
 router.get('/about', function (req, res) {
