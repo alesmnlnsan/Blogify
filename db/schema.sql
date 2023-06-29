@@ -31,8 +31,9 @@ INSERT INTO users (user_id, username, email, password_digest, pronouns)
 VALUES (1, 'JaneDoe', 'janedoe@example.com', 'password', 'she/her');
 
 -- POSTS DATA
-INSERT INTO posts (post_id, title, content, author_id, publication_date, updated_date, image_url)
-VALUES (1, 'Blog Introduction', 'This is the content to my first post!', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'https://i.pinimg.com/236x/7d/12/b0/7d12b00ab44ee4699f17089afee64a2d--phone-wallpapers.jpg');
+INSERT INTO posts (title, content, author_id, publication_date, updated_date)
+VALUES ('Introduction to My Blog', 'Welcome to my blog! This is the first post where I introduce myself and share my thoughts.', 1, NOW(), NOW());
 
-INSERT INTO posts (post_id, title, content, author_id, publication_date, updated_date, image_url)
-VALUES (2, 'The Art of Coding', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'https://i.pinimg.com/236x/7d/12/b0/7d12b00ab44ee4699f17089afee64a2d--phone-wallpapers.jpg');
+
+INSERT INTO posts (title, content, author_id, publication_date, updated_date, image_url)
+VALUES ('Another Random Blog Post', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 6, NOW(), NOW(), 'https://images.pexels.com/photos/7130504/pexels-photo-7130504.jpeg?cs=srgb&dl=pexels-codioful-%28formerly-gradienta%29-7130504.jpg&fm=jpg');

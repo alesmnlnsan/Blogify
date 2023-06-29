@@ -1,16 +1,14 @@
 <h2>User Profile</h2>
+<%= user.image_url %>
+
 <div>
-  <p><strong>Name:</strong> <%= users.username %></p>
-  <p><strong>Email:</strong> <%= users.email %></p>
-  <p><strong>Pronouns:</strong> <%= users.pronouns %></p>
+  <p><strong>Name:</strong> <%= user.username %></p>
+  <p><strong>Email:</strong> <%= user.email %></p>
+  <p><strong>Pronouns:</strong> <%= user.pronouns %></p>
 
 </div>
 
 <h2>Blog Posts</h2>
-
-<% if (posts.length === 0) { %>
-  <p>No posts found.</p>
-<% } else { %>
   <ul>
     <% posts.forEach((post) => { %>
       <li>
@@ -22,6 +20,5 @@
       </li>
     <% }) %>
   </ul>
-<% } %>
 
-<a href="/create">Create a new post</a>
+<a href="/posts/create">Create a new post</a>

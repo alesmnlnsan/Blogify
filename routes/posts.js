@@ -77,7 +77,7 @@ router.put('/posts/:id', (req, res) => {
       WHERE id = $3;`
 
   db.query(sql, [req.body.title, req.body.image_url, req.params.id], (err, dbRes) => {
-    res.redirect(`/dishes/${req.params.id}`)
+    res.redirect(`/posts/${req.params.id}`)
   })
 
 })
