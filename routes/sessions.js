@@ -4,9 +4,9 @@ const db = require('../db');
 const bcrypt = require('bcrypt');
 
 router.get("/login", (req, res) => {
-    if(err) {
-        console.log(err)
-    }
+  // if(err) {
+  //     console.log(err)
+  // }
   res.render('login');
 });
 
@@ -26,14 +26,16 @@ router.post("/login", (req, res) => {
       return;
     }
 
+    console.log(password, dbRes.rows[0].password_digest)
     // check your password
     bcrypt.compare(password, dbRes.rows[0].password_digest, (err, result) => {
       if (err) {
         console.log(err);
       }
-
+      console.log(dbRes.rows[0])
       if (result) {
-        req.session.userId = dbRes.rows[0].id;
+        req.session.user_Id = dbRes.rows[0].user_id;
+        console.log('req.session', req.session)
         res.redirect('/');
       } else {
         res.render("login");
@@ -43,7 +45,7 @@ router.post("/login", (req, res) => {
 });
 
 router.delete("/logout", (req, res) => {
-  req.session.userId = undefined;
+  req.session.user_Id = undefined;
   res.redirect('/login');
 });
 

@@ -11,6 +11,8 @@ const sessionsRouter = require('./routes/sessions')
 
 const expressLayouts = require('express-ejs-layouts')
 const methodOverride = require('method-override')
+
+const cookieParser = require("cookie-parser");
 const session = require('express-session')
 
 const setUser = require('./middlewares/set_user')
@@ -31,6 +33,7 @@ app.use(methodOverride(function (req, res) {
     return method
   }
 }))
+app.use(cookieParser());
 
 app.use(requestLogger)
 
@@ -46,10 +49,10 @@ app.use(session({
 app.use(setUser)
 app.use(expressLayouts);
 
-app.use('/sessions', sessionsRouter);
+app.use('/', sessionsRouter);
 app.use('/', indexRouter);
-app.use('/posts', postsRouter);
-app.use('/todos', todosRouter);
+app.use('/', postsRouter);
+app.use('/', todosRouter);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

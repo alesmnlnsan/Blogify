@@ -1,16 +1,27 @@
-<h2>Blog Post</h2>
+<%- include ('./partials/header') %>
 
-<h3><%= post.title %></h3>
-<h2><%= post.author_id %><span class="posted_at"><%= post.publication_date %></span><span class="updated_at"><%= post.updated_date %></span></h2>
+    <!-- <h2 class="center-text">Blog Post</h2> -->
 
-<img src="<%= post.image_url %>" alt="" />
+    <div class="row-header">
+        <h2 class="center-text">
+            <%= post.title %>
+        </h2>
 
-<p><%= post.content %></p>
+        <span class="posted_at">
+            <%= format(new Date(post.publication_date),'dd MMM yyyy') %>
+        </span>
+    </div>
+    <div class="blog-content">
+        <!-- <h2>
+            <%= post.author_id %>
+                <span class="updated_at">
+                    <%= format(new Date(post.updated_date),'dd MMM yyyy') %>
+                </span>
+        </h2> -->
 
+        <img src="<%= post.image_url %>" class="blog_image" alt="" />
 
-<!-- <form action="/posts/<%= post.id %>" method="post">
-  <input type="hidden" value="delete" name="_method">
-  <button>delete</button>
-</form>
-
-<a href="/dishes/<%= dish.id %>/edit">edit dish</a> -->
+        <p class="description">
+            <%= post.content %>
+        </p>
+    </div>

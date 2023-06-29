@@ -1,8 +1,8 @@
 <%- include ('./partials/header') %>
 
-  <h2 class="center-text">Login</h2>
+  <h2 class="center-text">Register Now</h2>
 
-  <form class="form" action="/login" method="post">
+  <form class="form" action="/signup" method="post">
     <div>
       <label for="email">Email</label>
       <input type="email" id="email" name="email">
@@ -12,8 +12,7 @@
       <input type="password" id="password" name="password">
     </div>
     <div>
-      <button type="submit">Login</button>
+      <button type="submit" class="signUp">Sign Up</button>
     </div>
   </form>
-
-  <p class="center-text">Not a member yet? <a href="/signup">Sign up here</a></p>
+  <p class="center-text">Already a member? <a href="/login">Login here</a></p>
