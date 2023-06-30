@@ -26,6 +26,15 @@ CREATE TABLE todos (
     complete BOOLEAN DEFAULT FALSE
 );
 
+CREATE TABLE comments(
+    comment_id SERIAL PRIMARY KEY,
+    post_id INTEGER,
+    username VARCHAR(100),
+    user_id INTEGER,
+    comment_date TIMESTAMP,
+    comment_text VARCHAR(300)
+);
+
 -- USERS DATA
 INSERT INTO users (user_id, username, email, password_digest, pronouns)
 VALUES (1, 'JaneDoe', 'janedoe@example.com', 'password', 'she/her');

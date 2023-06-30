@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 const bcrypt = require('bcrypt');
+const format = require('date-fns/format')
+const ensuredLoggedIn = require('../middlewares/ensured_logged_in')
 
 router.get('/login', (req, res) => {
   res.render('login');
@@ -28,7 +30,7 @@ router.post('/login', (req, res) => {
         console.log(err);
         return;
       }
-
+      console.log(dbRes.rows[0])
       if (result) {
         req.session.user_Id = dbRes.rows[0].user_id;
         res.redirect('/profile');
@@ -39,24 +41,30 @@ router.post('/login', (req, res) => {
   });
 });
 
-router.get('/profile', (req, res) => {
-    const userId = req.session.user_Id;
-  
-    const sql = 'SELECT * FROM users WHERE user_id = $1;';
-    db.query(sql, [userId], (err, dbRes) => {
-        if (err) {
-            console.log(err);
-            return;
-        }
-  
-        const user = dbRes.rows[0];
-        const posts = dbRes.rows;
-  
-        res.render('profile', { user: user, posts: posts });
-    });
+router.get('/profile', ensuredLoggedIn, (req, res) => {
+  const userId = req.session.user_Id;
+  console.log('userId', userId)
+  const sql = 'SELECT * FROM users WHERE user_id = $1;';
+  db.query(sql, [userId], (err, dbRes) => {
+    if (err) {
+      console.log('err', err);
+      return;
+    }
+    const sqlPosts = 'SELECT * FROM posts WHERE author_id = $1;';
+    db.query(sqlPosts, [userId], (errPosts, dbResPosts) => {
+      if (errPosts) {
+        console.log('errPosts', errPosts);
+        return;
+      }
+      const user = dbRes.rows[0];
+      const posts = dbResPosts.rows;
+      console.log(posts.length)
+      res.render('profile', { user: user, posts: posts, format });
+    })
+  });
 });
 
-  
+
 router.delete('/logout', (req, res) => {
   req.session.user_Id = undefined;
   res.redirect('/login');

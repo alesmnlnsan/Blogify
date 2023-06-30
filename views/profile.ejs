@@ -1,24 +1,46 @@
-<h2>User Profile</h2>
-<%= user.image_url %>
+<%- include ('./partials/header') %>
 
-<div>
-  <p><strong>Name:</strong> <%= user.username %></p>
-  <p><strong>Email:</strong> <%= user.email %></p>
-  <p><strong>Pronouns:</strong> <%= user.pronouns %></p>
+<div class="center_content">
+  <h2>User Profile</h2>
+  <%= user.image_url %>
 
+    <div class="user_details">
+      <p><strong>Name:</strong>
+        <%= user.username %>
+      </p>
+      <p><strong>Email:</strong>
+        <%= user.email %>
+      </p>
+      <p><strong>Pronouns:</strong>
+        <%= user.pronouns %>
+      </p>
+
+    </div>
+
+    <button onclick="window.open('/posts/create')"> Create New Post</button>
+
+    <h2>Blog Posts</h2>
+
+    <div class="blog-wrapper">
+      <% posts.forEach((post)=> { %>
+        <div>
+          <img src="<%= post.image_url %>" alt="">
+          <div class="content">
+            <h2>
+              <%= post.title %>
+            </h2>
+            <p>
+              <%= post.content %>
+            </p>
+            <p><strong>Publication Date:</strong>
+              <%= format(new Date(post.publication_date), 'dd MMM yyyy' ) %>
+            </p>
+            <div class="space-between">
+              <a href="/posts/<%= post.post_id %>/edit">Edit</a>
+              <a href="/posts/<%= post.post_id %>/?_method=DELETE">Delete</a>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+    </div>
 </div>
-
-<h2>Blog Posts</h2>
-  <ul>
-    <% posts.forEach((post) => { %>
-      <li>
-        <h3><%= post.title %></h3>
-        <p><%= post.content %></p>
-        <p><strong>Publication Date:</strong> <%= post.publication_date %></p>
-        <a href="/edit/<%= post.id %>">Edit</a>
-        <a href="/delete/<%= post.id %>">Delete</a>
-      </li>
-    <% }) %>
-  </ul>
-
-<a href="/posts/create">Create a new post</a>
