@@ -7,9 +7,20 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-   
+    <% if (user_Id) { %>
+        <p>logged in as <%= user.email %>!</p>
+  
+        <form action="/logout" method="post">
+          <input type="hidden" name="_method" value="delete">
+          <button>logout</button>
+        </form>
+  
+        <% } else { %>
+          <a href="/login">login</a>
+       <% } %>
+  
+       <%- body %>
 
-    <%- body %>
 
     <footer>&copy; 2023</footer>
 </body>

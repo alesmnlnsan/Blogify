@@ -1,5 +1,8 @@
 body {
-    box-sizing: border-box;
+    border-radius: 47px;
+background: linear-gradient(145deg, #5831b5, #693ad7);
+box-shadow:  23px 23px 46px #4a2997,
+             -23px -23px 46px #7b44fb;
   }
   
   
@@ -7,7 +10,7 @@ body {
   
   header {
     width: 100%;
-    border-bottom: 1px solid #8CD102;
+    border-bottom: 1px solid #0d0e0d;
     padding: 10px;
     display: flex;
     align-items: center;
@@ -135,7 +138,7 @@ body {
   }
   
   .content-block>h2 {
-    border: 1px solid #dcdcdc;
+    border: 1px solid #a658f0;
     width: calc(100% - 40px);
     padding: 10px 20px;
     color: #8CD102;
