@@ -24,7 +24,7 @@ CREATE TABLE todos (
     task_id SERIAL PRIMARY KEY,
     task VARCHAR(300) NOT NULL,
     complete BOOLEAN DEFAULT FALSE
-);
+); --scrapped from project
 
 CREATE TABLE comments(
     comment_id SERIAL PRIMARY KEY,
