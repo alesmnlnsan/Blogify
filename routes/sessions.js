@@ -17,7 +17,7 @@ router.post('/login', (req, res) => {
   db.query(sql, [email], (err, dbRes) => {
     if (err) {
       console.error(err);
-      return res.status(500).send('Database error.');
+      return res.status(500).send('Database error:' + err.message);
     }
 
     const user = dbRes.rows[0];
