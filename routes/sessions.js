@@ -44,7 +44,7 @@ router.post('/login', (req, res) => {
 
 
 router.get('/profile', ensuredLoggedIn, (req, res) => {
-  const userId = req.session.user_Id;
+  const userId = req.session.user_id;
   console.log('userId', userId)
   const sql = 'SELECT * FROM users WHERE user_id = $1;';
   db.query(sql, [userId], (err, dbRes) => {
