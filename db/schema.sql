@@ -36,8 +36,8 @@ CREATE TABLE comments(
 );
 
 -- USERS DATA
-INSERT INTO users (user_id, username, email, password_digest, pronouns)
-VALUES (1, 'JaneDoe', 'janedoe@example.com', 'password', 'she/her');
+INSERT INTO users (username, email, password_digest, pronouns)
+VALUES ('JaneDoe', 'janedoe@example.com', 'password', 'she/her');
 
 -- POSTS DATA
 INSERT INTO posts (title, content, author_id, publication_date, updated_date)

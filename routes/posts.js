@@ -107,8 +107,6 @@ router.delete('/posts/:id', (req, res) => {
   });
 });
 
-
-
 router.post('/comment', ensuredLoggedIn, (req, res) => {
   let content = req.body.content
   let postId = req.body.postId

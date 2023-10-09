@@ -1,15 +1,11 @@
-
-
 * {
   box-sizing: border-box;
 }
 
-
 /* Header */
-
 header {
   width: 100%;
-  border-bottom: 1px solid #8CD102;
+  border-bottom: 1px solid #001f3f; /* Deep Blue */
   padding: 10px;
   display: flex;
   align-items: center;
@@ -17,7 +13,7 @@ header {
 
 .logo-name {
   margin: 0;
-  color: #8CD102;
+  color: #001f3f; /* Deep Blue */
 }
 
 .nav-list {
@@ -25,14 +21,13 @@ header {
 }
 
 .nav-list>a {
-  color: #8CD102;
+  color: #001f3f; /* Deep Blue */
   margin-right: 10px;
 }
 
 /* End Header */
 
 /* Home Page */
-
 .hero-image {
   display: flex;
   border-radius: 4px;
@@ -42,7 +37,7 @@ header {
 }
 
 .description {
-  color: #666666;
+  color: #444444; /* Dark Gray */
   text-align: center;
   font-size: 16px;
 }
@@ -78,7 +73,7 @@ textarea {
   box-sizing: border-box;
   font-size: 15px;
   border-radius: 4px;
-  border: 1px solid #777777;
+  border: 1px solid #333333; /* Gray */
 }
 
 textarea {
@@ -91,10 +86,9 @@ textarea {
   max-height: 300px;
 }
 
-
 button {
   border: none;
-  background: #8CD102;
+  background: #ff851b; /* Orange */
   color: white;
   width: 300px;
   padding: 15px;
@@ -103,19 +97,17 @@ button {
 }
 
 .button-secondary {
-  border: 1px solid #8CD102;
+  border: 1px solid #ff851b; /* Orange */
   background: white;
-  color: #8CD102;
+  color: #ff851b; /* Orange */
   width: 300px;
   padding: 15px;
   border-radius: 5px;
 }
 
-
 .center-block {
   display: flex;
   flex-direction: column;
-  /* margin: auto; */
   align-items: center;
   width: 100%;
 }
@@ -140,7 +132,7 @@ button {
   border: 1px solid #dcdcdc;
   width: calc(100% - 40px);
   padding: 10px 20px;
-  color: #8CD102;
+  color: #001f3f; /* Deep Blue */
 }
 
 .content-block>p {
@@ -153,9 +145,7 @@ button {
   margin-top: 20px;
 }
 
-
 /* Blog */
-
 .blog-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -168,7 +158,7 @@ button {
 .blog-wrapper>div {
   width: 30%;
   margin: 20px 1.5%;
-  border: 1px solid #8CD10240;
+  border: 1px solid #001f3f; /* Deep Blue */
   border-radius: 12px;
 }
 
@@ -177,7 +167,6 @@ button {
   margin-bottom: 20px;
   padding: 10px;
   border-radius: 12px;
-
 }
 
 .comment_block h4,
@@ -187,13 +176,6 @@ button {
 
 .date {
   font-size: 12px;
-}
-
-.space-between {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .comment {
@@ -236,9 +218,7 @@ button {
 
 /* End Blog */
 
-
 /* View Blog */
-
 .row-header {
   display: flex;
   align-items: center;
@@ -263,7 +243,6 @@ a {
 }
 
 .ui-card {
-  /* border: 1px solid red; */
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
@@ -284,14 +263,12 @@ a {
   padding: 10px;
 }
 
-
 @media (min-width: 40rem) {
   .all-dishes {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
   }
-
 }
 
 @media (min-width: 60rem) {
@@ -304,7 +281,7 @@ a {
   .blog-wrapper>a {
     width: 45%;
     margin: 20px 1.5%;
-    border: 1px solid #8CD10240;
+    border: 1px solid #001f3f; /* Deep Blue */
     border-radius: 12px;
   }
 }
@@ -313,7 +290,7 @@ a {
   .blog-wrapper>a {
     width: 95%;
     margin: 20px 1.5%;
-    border: 1px solid #8CD10240;
+    border: 1px solid #001f3f; /* Deep Blue */
     border-radius: 12px;
   }
 }

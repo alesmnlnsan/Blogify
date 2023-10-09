@@ -16,30 +16,32 @@ router.post('/login', (req, res) => {
   const sql = 'SELECT * FROM users WHERE email = $1;';
   db.query(sql, [email], (err, dbRes) => {
     if (err) {
-      console.log(err);
-      return;
+      console.error(err);
+      return res.status(500).send('Database error.');
     }
 
-    if (dbRes.rows.length === 0) {
-      res.render('login');
-      return;
+    const user = dbRes.rows[0];
+
+    if (!user) {
+      return res.render('login', { error: 'Invalid email or password' });
     }
 
-    bcrypt.compare(password, dbRes.rows[0].password_digest, (err, result) => {
+    bcrypt.compare(password, user.password_digest, (err, result) => {
       if (err) {
-        console.log(err);
-        return;
+        console.error(err);
+        return res.status(500).send('Internal error.');
       }
-      console.log(dbRes.rows[0])
+
       if (result) {
-        req.session.user_Id = dbRes.rows[0].user_id;
-        res.redirect('/profile');
+        req.session.user_id = user.user_id;
+        return res.redirect('/profile');
       } else {
-        res.render('login');
+        return res.render('login', { error: 'Invalid email or password' });
       }
     });
   });
 });
+
 
 router.get('/profile', ensuredLoggedIn, (req, res) => {
   const userId = req.session.user_Id;
@@ -66,9 +68,15 @@ router.get('/profile', ensuredLoggedIn, (req, res) => {
 
 
 router.delete('/logout', (req, res) => {
-  req.session.user_Id = undefined;
-  res.redirect('/login');
+  req.session.destroy((err) => {
+      if (err) {
+          console.error(err);
+          return res.status(500).send('Failed to log out.');
+      }
+      res.redirect('/login');
+  });
 });
+
 
 router.get('/signup', (req, res) => {
   res.render('signup');
@@ -80,23 +88,27 @@ router.post('/signup', (req, res) => {
   const password = req.body.password;
   const pronouns = req.body.pronouns;
 
+  if (!password) {
+    return res.status(400).send('Password is required.');
+  }
+
   bcrypt.hash(password, 10, (err, hashedPassword) => {
     if (err) {
-      console.log(err);
-      return;
+      console.error(err);
+      return res.status(500).send('Hashing error during signup.');
     }
 
     const sql = 'INSERT INTO users (username, email, password_digest, pronouns) VALUES ($1, $2, $3, $4);';
     db.query(sql, [username, email, hashedPassword, pronouns], (err, dbRes) => {
       if (err) {
-        console.log(err);
-        return;
+        console.error("Signup error:", err);
+        return res.status(500).send('Database error during signup.');
       }
-
       res.redirect('/login');
     });
   });
 });
 
-// Export the router
+
+
 module.exports = router;
