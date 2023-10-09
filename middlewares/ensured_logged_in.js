@@ -1,5 +1,4 @@
 function ensuredLoggedIn(req, res, next) {
-  console.log('req',req.session)
     if (req.session.user_id) {
       return next()
     }
@@ -8,4 +7,4 @@ function ensuredLoggedIn(req, res, next) {
   }
   
   
-  module.exports = ensuredLoggedIn
+  module.exports = ensuredLoggedIn;

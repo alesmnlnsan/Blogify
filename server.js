@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 9000
 
 const indexRouter = require('./routes/index')
 const postsRouter = require('./routes/posts')
@@ -49,8 +49,8 @@ app.use(session({
 })
 );
 
-app.use(setUser)
 app.use(expressLayouts);
+app.use(setUser)
 
 app.use('/', sessionsRouter);
 app.use('/', indexRouter);
