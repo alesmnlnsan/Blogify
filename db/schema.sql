@@ -39,6 +39,8 @@ CREATE TABLE comments(
 INSERT INTO users (username, email, password_digest, pronouns)
 VALUES ('JaneDoe', 'janedoe@example.com', 'password', 'she/her');
 
+INSERT INTO users (username, email, password_digest, pronouns)
+VALUES ('lumi', 'lumi@test.com', 'password', 'she/her');
 -- POSTS DATA
 INSERT INTO posts (title, content, author_id, publication_date, updated_date)
 VALUES ('Introduction to My Blog', 'Welcome to my blog! This is the first post where I introduce myself and share my thoughts.', 1, NOW(), NOW());
