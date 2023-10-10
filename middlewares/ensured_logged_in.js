@@ -1,10 +1,12 @@
+const flash = require('connect-flash');
+
 function ensuredLoggedIn(req, res, next) {
-    if (req.session.user_id) {
-      return next()
-    }
-  
-    res.redirect("/login")
+  if (req.session.user_id) {
+    return next();
   }
-  
-  
-  module.exports = ensuredLoggedIn;
+
+  req.flash('error', 'You must be logged in to access this page.');
+  res.redirect('/login');
+}
+
+module.exports = ensuredLoggedIn;

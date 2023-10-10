@@ -15,9 +15,7 @@
               <p>
                 <%= post.content %>
               </p>
-              <p><strong>Author:</strong>
-                <%= post.author_id %>
-              </p>
+              <p><strong>Author:</strong> <%= post.author_name %></p>
               <p><strong>Publication Date:</strong>
                 <%= format(new Date(post.publication_date), 'dd MMM yyyy') %>
               </p>

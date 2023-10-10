@@ -2,12 +2,21 @@
 
 <form action="/posts/<%= post.post_id %>?_method=PUT" method="post">
   <input type="hidden" name="_method" value="put">
-  <label for="">Title</label>
-  <input type="text" name="title" value="<%= post.title %>">
-  <label for="">Image</label>
-  <input type="text" name="image_url" value="<%= post.image_url %>">
-  <label for="">Content</label>
-  <input type="text" name="content" value="<%= post.content %>">
+  <label for="title">Title</label>
+  <input type="text" name="title" id="title" value="<%= post.title %>">
+  <% if (errors && errors.title) { %>
+    <p class="error"><%= errors.title.msg %></p>
+  <% } %>
+  <label for="image_url">Image</label>
+  <input type="text" name="image_url" id="image_url" value="<%= post.image_url %>">
+  <% if (errors && errors.image_url) { %>
+    <p class="error"><%= errors.image_url.msg %></p>
+  <% } %>
+  <label for="content">Content</label>
+  <textarea name="content" id="content"><%= post.content %></textarea>
+  <% if (errors && errors.content) { %>
+    <p class="error"><%= errors.content.msg %></p>
+  <% } %>
 
   <button>Update</button>
 </form>

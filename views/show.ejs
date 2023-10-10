@@ -24,35 +24,22 @@
         <p class="description">
             <%= post.content %>
         </p>
-        <h2>Comments</h2>
-        <% if (comments.length===0) { %>
-            <p>No comments</p>
-            <% } else { %>
-                <% comments.forEach((comment)=> { %>
-                    <div class="comment_block">
-                        <div class="space-between">
-
-                            <h4>
-                                <%= comment.username %>
-                            </h4>
-                            <p class="date">
-                                <%= format(new Date(comment.comment_date),'dd MMM yyyy hh:mm a') %>
-                            </p>
-                        </div>
-
-                        <p class="comment">
-                            <%= comment.comment_text %>
-                        </p>
-                    </div>
-                    <% }) %>
-                        <% } %>
-                            <% if(userId){ %>
-                                <form class="form" action="/comment" method="post">
-                                    <h3>Leave a Comment</h3>
-                                    <label for="content">Comment:</label>
-                                    <input type="text" id="content" name="content">
-                                    <input type="hidden" id="postId" name="postId" value=" <%= post.post_id %>">
-                                    <button type="submit">Comment</button>
-                                </form>
-                                <% } %>
-    </div>
+        <h3>Comments</h3>
+        <% comments.forEach((comment) => { %>
+            <strong><%= comment.username %>:</strong> <%= comment.comment_text %>
+        <% }) %>
+        
+        <h3>Leave a Comment:</h3>
+        <% if (user) { %>
+            <form action="/comment" method="POST">
+                <textarea name="content" placeholder="Your comment"></textarea>
+                <p class="date">
+                    <%= format(new Date(comment.comment_date),'dd MMM yyyy hh:mm a') %>
+                </p>
+                <input type="hidden" name="postId" value="<%= post.post_id %>">
+                <button type="submit">Add Comment</button>
+            </form>
+        <% } else { %>
+            <p>You must be logged in to leave a comment.</p>
+        <% } %>
+        

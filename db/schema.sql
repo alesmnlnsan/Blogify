@@ -3,12 +3,11 @@ CREATE DATABASE blog_app;
 -- TABLES
 CREATE TABLE posts (
     post_id SERIAL PRIMARY KEY,
-    title VARCHAR(200),
-    content TEXT, 
-    author_id INTEGER,
-    publication_date TIMESTAMP,
-    updated_date TIMESTAMP,
-    image_url TEXT,
+    title VARCHAR(100) NOT NULL,
+    content TEXT NOT NULL,
+    image_url VARCHAR(300),
+    author_id INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
     FOREIGN KEY (author_id) REFERENCES users(user_id)
 );
 
@@ -48,3 +47,5 @@ VALUES ('Introduction to My Blog', 'Welcome to my blog! This is the first post w
 
 INSERT INTO posts (title, content, author_id, publication_date, updated_date, image_url)
 VALUES ('Another Random Blog Post', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 6, NOW(), NOW(), 'https://images.pexels.com/photos/7130504/pexels-photo-7130504.jpeg?cs=srgb&dl=pexels-codioful-%28formerly-gradienta%29-7130504.jpg&fm=jpg');
+
+ALTER TABLE posts ADD COLUMN created_at TIMESTAMP DEFAULT NOW();

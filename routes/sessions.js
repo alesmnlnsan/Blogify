@@ -43,29 +43,30 @@ router.post('/login', (req, res) => {
 });
 
 
-router.get('/profile', ensuredLoggedIn, (req, res) => {
-  const userId = req.session.user_id;
-  console.log('userId', userId)
-  const sql = 'SELECT * FROM users WHERE user_id = $1;';
+//--------------------------++ PROFILE
+
+router.get('/profile', (req, res) => {
+  const userId = req.session.userId;
+
+  const sql = `
+    SELECT *
+    FROM posts
+    WHERE author_id = $1;
+  `;
+
   db.query(sql, [userId], (err, dbRes) => {
     if (err) {
-      console.log('err', err);
-      return;
+      console.error(err);
+      return res.status(500).send('Database error.');
     }
-    const sqlPosts = 'SELECT * FROM posts WHERE author_id = $1;';
-    db.query(sqlPosts, [userId], (errPosts, dbResPosts) => {
-      if (errPosts) {
-        console.log('errPosts', errPosts);
-        return;
-      }
-      const user = dbRes.rows[0];
-      const posts = dbResPosts.rows;
-      console.log(posts.length)
-      res.render('profile', { user: user, posts: posts, format });
-    })
+
+    const posts = dbRes.rows;
+
+    res.render('profile', { posts });
   });
 });
 
+//------------------------++ LOGOUT
 
 router.delete('/logout', (req, res) => {
   req.session.destroy((err) => {
@@ -77,6 +78,8 @@ router.delete('/logout', (req, res) => {
   });
 });
 
+
+//------------------------++ SIGNUP
 
 router.get('/signup', (req, res) => {
   res.render('signup');

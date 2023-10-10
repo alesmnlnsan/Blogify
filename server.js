@@ -2,7 +2,8 @@ require('dotenv').config()
 
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 9000
+const port = process.env.PORT || 8800;
+const flash = require('connect-flash');
 
 const indexRouter = require('./routes/index')
 const postsRouter = require('./routes/posts')
@@ -20,6 +21,9 @@ const ensuredLoggedIn = require('./middlewares/ensured_logged_in')
 const requestLogger = require('./middlewares/request_logger')
 const requestToDeleteMethod = require('./middlewares/request_to_delete')
 
+// app.set('views', path.join(__dirname, 'views'));
+
+app.use(flash());
 
 app.set('view engine', 'ejs');
 
@@ -36,6 +40,7 @@ app.use(methodOverride(function (req, res) {
     return method
   }
 }))
+
 app.use(cookieParser());
 
 app.use(requestLogger)
