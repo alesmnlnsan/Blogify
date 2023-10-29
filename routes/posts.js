@@ -30,14 +30,11 @@ router.get('/posts/create', (req, res) => {
 })
 
 router.get('/posts/:id', (req, res) => {
-  const postId = req.params.postId;
+  const postId = req.params.id;
 
-  const sql = `
-    SELECT posts.*, users.username AS author_username
-    FROM posts
-    JOIN users ON posts.author_id = users.user_id
-    WHERE post_id = $1;
-  `;
+  console.log(`Post ID: ${postId}`);
+
+  const sql = `SELECT * FROM posts WHERE post_id = $1`;
 
   db.query(sql, [postId], (err, dbRes) => {
     if (err) {
@@ -47,7 +44,11 @@ router.get('/posts/:id', (req, res) => {
 
     const post = dbRes.rows[0];
 
-    res.render('posts-details', { post });
+    if (!post) {
+      return res.status(404).send('Post not found.');
+    }
+
+    res.render('single-post', { post, format });
   });
 });
 

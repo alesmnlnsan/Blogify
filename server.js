@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 8800;
 const flash = require('connect-flash');
+const format = require('date-fns/format');
 
 const indexRouter = require('./routes/index')
 const postsRouter = require('./routes/posts')
