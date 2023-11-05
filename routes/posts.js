@@ -14,12 +14,20 @@ router.get('/posts', (req, res) => {
   `;
 
   db.query(sql, (err, dbRes) => {
-      if (err) {
-          console.log(err);
-          return;
-      }
-      const posts = dbRes.rows;
-      res.render('posts', { posts: posts, user: req.session.user, format });
+    if (err) {
+      console.log(err);
+      return;
+    }
+    const posts = dbRes.rows;
+
+    const user = {
+      username: req.session.username,
+      email: req.session.email,
+      pronouns: req.session.pronouns,
+    }
+
+    console.log('sess', req.session)
+    res.render('posts', { posts: posts, user, format });
   });
 });
 
@@ -56,8 +64,8 @@ router.post('/posts', ensuredLoggedIn, (req, res) => {
   let title = req.body.title
   let imageUrl = req.body.image
   let content = req.body.content
-  let userId = req.session.user_Id;
-
+  let userId = req.session.user_id;
+  console.log('userId', userId, content)
   const sql = `INSERT INTO posts (title, image_url, content, publication_date, author_id) 
           VALUES ($1, $2, $3, CURRENT_TIMESTAMP, $4)
           RETURNING post_id;
@@ -118,7 +126,7 @@ router.post('/comment', ensuredLoggedIn, (req, res) => {
   const postId = req.body.postId;
   const content = req.body.content;
   const userId = req.session.user_id;
-  const username = req.session.user.username; // Make sure the session stores the username
+  const username = req.session.username; // Make sure the session stores the username
 
   const sql = `
       INSERT INTO comments (post_id, user_id, username, comment_text, comment_date)
@@ -126,22 +134,32 @@ router.post('/comment', ensuredLoggedIn, (req, res) => {
   `;
 
   db.query(sql, [postId, userId, username, content], (err) => {
-      if (err) {
-          console.log(err);
-          return;
-      }
-      res.redirect(`/posts/${postId}`);
+    if (err) {
+      console.log(err);
+      return;
+    }
+    res.redirect(`/posts/${postId}`);
   });
 });
 
 
 //other pages of the blog website
 router.get('/about', function (req, res) {
-  res.render('about');
+  const user = {
+    username: req.session.username,
+    email: req.session.email,
+    pronouns: req.session.pronouns,
+  }
+  res.render('about', { user });
 });
 
 router.get('/contact', function (req, res) {
-  res.render('contact');
+  const user = {
+    username: req.session.username,
+    email: req.session.email,
+    pronouns: req.session.pronouns,
+  }
+  res.render('contact', { user });
 });
 
 router.post('/contact', (req, res) => {

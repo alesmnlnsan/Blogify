@@ -11,10 +11,13 @@
     <a href="/contact">Contact Us</a>
   </div>
   <div class="user-info">
-    <% if (typeof user !== 'undefined' && user) { %>
+    <% if (user && user.username) { %>
       Logged in as: <%= user.username %>
-  <% } else { %>
+      <form action="/logout" method="post">
+        <button type="submit">Logout</button>
+      </form>
+    <% } else { %>
       <a href="/login">Login</a>
-  <% } %>
-</div>
+    <% } %>
+  </div>
 </header>

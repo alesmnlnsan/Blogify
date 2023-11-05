@@ -6,7 +6,7 @@ function setUser(req, res, next) {
   console.log('Session user_id:', req.session.user_id);
 
 
-  if (!req.session.user_Id) {
+  if (!req.session.user_id) {
       next();
       return;
   }

@@ -21,19 +21,25 @@ router.post('/login', (req, res) => {
     }
 
     const user = dbRes.rows[0];
-
+    console.log('user data', user)
     if (!user) {
       return res.render('login', { error: 'Invalid email or password' });
     }
 
     bcrypt.compare(password, user.password_digest, (err, result) => {
+      console.log(err, result)
       if (err) {
         console.error(err);
         return res.status(500).send('Internal error.');
       }
-
+      console.log('login flow')
+      // console.log(dbRes.rows[0])
       if (result) {
+        console.log('login flow res', result)
         req.session.user_id = user.user_id;
+        req.session.username = user.username;
+        req.session.email = user.email;
+        req.session.pronouns = user.pronouns;
         return res.redirect('/profile');
       } else {
         return res.render('login', { error: 'Invalid email or password' });
@@ -46,8 +52,9 @@ router.post('/login', (req, res) => {
 //--------------------------++ PROFILE
 
 router.get('/profile', (req, res) => {
-  const userId = req.session.userId;
-
+  const userId = req.session.user_id;
+  // console.log('loc', res.locals.user_id)
+  // console.log('userId', userId)
   const sql = `
     SELECT *
     FROM posts
@@ -59,25 +66,30 @@ router.get('/profile', (req, res) => {
       console.error(err);
       return res.status(500).send('Database error.');
     }
+    const user = {
+      username: req.session.username,
+      email: req.session.email,
+      pronouns: req.session.pronouns,
+    }
 
     const posts = dbRes.rows;
-
-    res.render('profile', { posts });
+    console.log(posts)
+    res.render('profile', { posts, user });
   });
 });
 
 //------------------------++ LOGOUT
 
-router.delete('/logout', (req, res) => {
+router.post('/logout', (req, res) => {
   req.session.destroy((err) => {
-      if (err) {
-          console.error(err);
-          return res.status(500).send('Failed to log out.');
-      }
-      res.redirect('/login');
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Failed to log out.');
+    }
+    res.clearCookie('connect.sid');
+    res.redirect('/');
   });
 });
-
 
 //------------------------++ SIGNUP
 

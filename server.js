@@ -41,6 +41,7 @@ app.use(methodOverride(function (req, res) {
     return method
   }
 }))
+app.use(cookieParser());
 
 app.use(cookieParser());
 
@@ -62,6 +63,7 @@ app.use('/', sessionsRouter);
 app.use('/', indexRouter);
 app.use('/', postsRouter);
 app.use('/', todosRouter);
+
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

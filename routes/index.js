@@ -3,7 +3,13 @@ const router = express.Router();
 // const db = require('../db')
 
 router.get('/', (req, res) => {
-  res.render('home');
+  const user = {
+    username: req.session.username,
+    email: req.session.email,
+    pronouns: req.session.pronouns,
+  }
+
+  res.render('home', { user });
 });
 
 module.exports = router
