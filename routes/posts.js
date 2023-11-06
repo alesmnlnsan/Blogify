@@ -3,8 +3,6 @@ const router = express.Router()
 const db = require('../db')
 const ensuredLoggedIn = require('../middlewares/ensured_logged_in')
 const format = require('date-fns/format')
-const { body, validationResult } = require('express-validator');
-
 
 router.get('/posts', (req, res) => {
   const sql = `
@@ -40,11 +38,8 @@ router.get('/posts/create', (req, res) => {
 router.get('/posts/:id', (req, res) => {
   const postId = req.params.id;
 
-  console.log(`Post ID: ${postId}`);
-
-  const sql = `SELECT * FROM posts WHERE post_id = $1`;
-
-  db.query(sql, [postId], (err, dbRes) => {
+  const sqlPost = `SELECT * FROM posts WHERE post_id = $1`;
+  db.query(sqlPost, [postId], (err, dbRes) => {
     if (err) {
       console.error(err);
       return res.status(500).send('Database error.');
@@ -56,7 +51,17 @@ router.get('/posts/:id', (req, res) => {
       return res.status(404).send('Post not found.');
     }
 
-    res.render('single-post', { post, format });
+    const sqlComments = `SELECT * FROM comments WHERE post_id = $1`;
+    db.query(sqlComments, [postId], (err, dbRes) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send('Database error.');
+      }
+
+      const comments = dbRes.rows;
+
+      res.render('single-post', { post, comments });
+    });
   });
 });
 
@@ -65,7 +70,7 @@ router.post('/posts', ensuredLoggedIn, (req, res) => {
   let imageUrl = req.body.image
   let content = req.body.content
   let userId = req.session.user_id;
-  console.log('userId', userId, content)
+  // console.log('userId', userId, content)
   const sql = `INSERT INTO posts (title, image_url, content, publication_date, author_id) 
           VALUES ($1, $2, $3, CURRENT_TIMESTAMP, $4)
           RETURNING post_id;
@@ -128,6 +133,20 @@ router.post('/comment', ensuredLoggedIn, (req, res) => {
   const userId = req.session.user_id;
   const username = req.session.username; // Make sure the session stores the username
 
+  const userSql = `
+  SELECT * FROM users 
+  WHERE user_id = $1;
+  `;
+
+  db.query(userSql, [userId], (errUser, dbResUser) => {
+    if (errUser) {
+      console.log(errUser)
+      return
+    }
+    const user = dbResUser.rows[0];
+
+    console.log('user', user)
+
   const sql = `
       INSERT INTO comments (post_id, user_id, username, comment_text, comment_date)
       VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP)
@@ -182,6 +201,7 @@ router.post('/contact', (req, res) => {
     res.status(200).send('Form submitted successfully');
   });
 });
+}); 
 
 
 module.exports = router

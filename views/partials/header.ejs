@@ -3,21 +3,25 @@
   <a href="/">
     <h1 class="logo-name">BLOGIFY</h1>
   </a>
-  <div class="nav-list">
-    <a href="/">Home</a>
-    <a href="/about">About</a>
-    <a href="/posts">Blogs</a>
-    <a href="/profile">Profile</a>
-    <a href="/contact">Contact Us</a>
-  </div>
-  <div class="user-info">
-    <% if (user && user.username) { %>
-      Logged in as: <%= user.username %>
-      <form action="/logout" method="post">
-        <button type="submit">Logout</button>
-      </form>
-    <% } else { %>
-      <a href="/login">Login</a>
-    <% } %>
+  <div class="nav-list" style="display: flex; align-items: center; justify-content: space-between;">
+    <div class="nav-links" style="display: flex; gap: 20px;">
+      <a href="/">Home</a>
+      <a href="/posts">Blogs</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact Us</a>
+      <% if (user && user.username) { %>
+        <a href="/profile">Profile</a>
+      <% } %>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <% if (user && user.username) { %>
+        <div class="username-login" style="margin-left: 10px;">Logged in as: <%= user.username %></div>
+        <form action="/logout" method="post">
+          <button type="submit">Logout</button>
+        </form>
+      <% } else { %>
+        <a href="/login" style="margin-left: 10px;">Login</a>
+      <% } %>
+    </div>
   </div>
 </header>

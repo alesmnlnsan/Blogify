@@ -5,6 +5,10 @@ const bcrypt = require('bcrypt');
 const format = require('date-fns/format')
 const ensuredLoggedIn = require('../middlewares/ensured_logged_in')
 
+router.get('/', (req, res) => {
+  res.render('home', { user: req.user });
+});
+
 router.get('/login', (req, res) => {
   res.render('login');
 });
@@ -53,8 +57,6 @@ router.post('/login', (req, res) => {
 
 router.get('/profile', (req, res) => {
   const userId = req.session.user_id;
-  // console.log('loc', res.locals.user_id)
-  // console.log('userId', userId)
   const sql = `
     SELECT *
     FROM posts
