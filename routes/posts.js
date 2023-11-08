@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const db = require('../db')
 const ensuredLoggedIn = require('../middlewares/ensured_logged_in')
-const format = require('date-fns/format')
+const format = require('date-fns/format');
 
 router.get('/posts', (req, res) => {
   const sql = `
@@ -49,6 +49,8 @@ router.get('/posts/:id', (req, res) => {
     if (!post) {
       return res.status(404).send('Post not found.');
     }
+    
+    post.publication_date = format(new Date(post.publication_date), 'dd MMM yyyy');
 
     const sqlComments = `SELECT * FROM comments WHERE post_id = $1`;
     db.query(sqlComments, [postId], (err, dbRes) => {
@@ -59,7 +61,7 @@ router.get('/posts/:id', (req, res) => {
 
       const comments = dbRes.rows;
 
-      res.render('single-post', { post, comments });
+      res.render('single-post', { post, comments, format });
     });
   });
 });
