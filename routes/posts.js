@@ -34,10 +34,52 @@ router.get('/posts/create', (req, res) => {
   res.render('new_blog')
 })
 
+router.post('/posts', ensuredLoggedIn, (req, res) => {
+  let title = req.body.title
+  let imageUrl = req.body.image
+  let content = req.body.content
+  let userId = req.session.user_id;
+  // console.log('userId', userId, content)
+  const sql = `INSERT INTO posts (title, image_url, content, publication_date, author_id) 
+          VALUES ($1, $2, $3, CURRENT_TIMESTAMP, $4)
+          RETURNING post_id;
+        `
+
+  db.query(sql, [title, imageUrl, content, userId], (err, dbRes) => {
+    if (err) {
+      console.log(err)
+    }
+    console.log('dbRes', dbRes)
+    res.redirect(`/posts/${dbRes.rows[0].post_id}`)
+  })
+
+})
+
+router.get('/posts/edit/:id', (req, res) => {
+  const sql = `
+    SELECT * 
+    FROM posts
+    WHERE post_id = $1;
+    `
+
+  console.log('req.params.id', req.params.id)
+
+  db.query(sql, [req.params.id], (err, dbRes) => {
+    let post = dbRes.rows[0]
+    res.render('edit', { post: post })
+  })
+})
+
 router.get('/posts/:id', (req, res) => {
   const postId = req.params.id;
 
-  const sqlPost = `SELECT * FROM posts WHERE post_id = $1`;
+  const sqlPost = `
+  SELECT posts.*, users.username as author_name 
+  FROM posts 
+  JOIN users ON posts.author_id = users.user_id 
+  WHERE post_id = $1
+`;
+
   db.query(sqlPost, [postId], (err, dbRes) => {
     if (err) {
       console.error(err);
@@ -66,67 +108,40 @@ router.get('/posts/:id', (req, res) => {
   });
 });
 
-router.post('/posts', ensuredLoggedIn, (req, res) => {
-  let title = req.body.title
-  let imageUrl = req.body.image
-  let content = req.body.content
-  let userId = req.session.user_id;
-  // console.log('userId', userId, content)
-  const sql = `INSERT INTO posts (title, image_url, content, publication_date, author_id) 
-          VALUES ($1, $2, $3, CURRENT_TIMESTAMP, $4)
-          RETURNING post_id;
-        `
-
-  db.query(sql, [title, imageUrl, content, userId], (err, dbRes) => {
-    if (err) {
-      console.log(err)
-    }
-    console.log('dbRes', dbRes)
-    res.redirect(`/posts/${dbRes.rows[0].post_id}`)
-  })
-
-})
-
-router.get('/posts/:id/edit', (req, res) => {
-  const sql = `
-    SELECT * 
-    FROM posts
-    WHERE post_id = $1;
-    `
-
-  console.log('req.params.id', req.params.id)
-
-  db.query(sql, [req.params.id], (err, dbRes) => {
-    let post = dbRes.rows[0]
-    res.render('edit', { post: post })
-  })
-})
-
 router.put('/posts/:id', (req, res) => {
+  const { title, image_url, content } = req.body;
+  const postId = req.params.id;
+
   const sql = `
     UPDATE posts 
     SET title = $1, image_url = $2, content = $3
     WHERE post_id = $4;
   `;
 
-  db.query(sql, [req.body.title, req.body.image_url, req.body.content, req.params.id], (err, dbRes) => {
+  db.query(sql, [title, image_url, content, postId], (err, dbRes) => {
     if (err) {
       console.error(err);
       return res.status(500).send('Database error.');
     }
 
-    res.redirect(`/posts/${req.params.id}`);
+    res.redirect(`/posts/${postId}`);
   });
 });
 
-router.delete('/posts/:id', (req, res) => {
+router.delete('/posts/:id', ensuredLoggedIn, (req, res) => {
   const postId = req.params.id;
 
   const sql = 'DELETE FROM posts WHERE post_id = $1;';
   db.query(sql, [postId], (err, dbRes) => {
-    res.redirect('/profile')
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Database error.');
+    }
+
+    res.redirect('/profile');
   });
 });
+
 
 // router.post('/comment', ensuredLoggedIn, (req, res) => {
 //   const postId = req.body.postId;

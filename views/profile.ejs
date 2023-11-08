@@ -26,6 +26,10 @@
         <h3><%= post.title %></h3>
         <p><%= post.content %></p>
         <p>By <span class="you">YOU</span> on <%= post.created_at.toDateString() %></p>
+        <a href="/posts/edit/<%= post.post_id %>"><button>Edit</button></a>
+        <form action="/posts/<%= post.post_id %>?_method=DELETE" method="post">
+          <button type="submit">Delete</button>
+        </form>
       </div>
     </div>
   <% }) %>
