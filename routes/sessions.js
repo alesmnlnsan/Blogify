@@ -5,8 +5,14 @@ const bcrypt = require('bcrypt');
 const format = require('date-fns/format')
 const ensuredLoggedIn = require('../middlewares/ensured_logged_in')
 
-router.get('/', (req, res) => {
-  res.render('home', { user: req.user });
+router.get('/', function (req, res) {
+  const user = {
+    userId: req.session.user_id,
+    username: req.session.username,
+    email: req.session.email,
+    pronouns: req.session.pronouns,
+  };
+  res.render('home', { user });
 });
 
 router.get('/login', (req, res) => {
@@ -51,7 +57,6 @@ router.post('/login', (req, res) => {
     });
   });
 });
-
 
 //--------------------------++ PROFILE
 
@@ -126,6 +131,45 @@ router.post('/signup', (req, res) => {
   });
 });
 
+//------------------------++ ABOUT and CONTACT
+router.get('/about', function (req, res) {
+  const user = {
+    username: req.session.username,
+    email: req.session.email,
+    pronouns: req.session.pronouns,
+  }
+  res.render('about', { user: user });
+});
+
+router.get('/contact', function (req, res) {
+  const user = {
+    username: req.session.username,
+    email: req.session.email,
+    pronouns: req.session.pronouns,
+  }
+  res.render('contact', { user });
+});
+
+router.post('/contact', (req, res) => {
+  const { name, email, message } = req.body;
+
+  const sql = `
+    INSERT INTO contacts (name, email, message)
+    VALUES ($1, $2, $3)
+    RETURNING id;
+  `;
+
+  db.query(sql, [name, email, message], (err, dbRes) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+
+    const contactId = dbRes.rows[0].id;
+    console.log(`Inserted contact with ID: ${contactId}`);
+    res.status(200).send('Form submitted successfully');
+  });
+});
 
 
 module.exports = router;

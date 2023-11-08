@@ -29,7 +29,6 @@ router.get('/posts', (req, res) => {
   });
 });
 
-
 router.get('/posts/create', (req, res) => {
   // console.log('req.session', req.session)
   res.render('new_blog')
@@ -127,81 +126,41 @@ router.delete('/posts/:id', (req, res) => {
   });
 });
 
-router.post('/comment', ensuredLoggedIn, (req, res) => {
-  const postId = req.body.postId;
-  const content = req.body.content;
-  const userId = req.session.user_id;
-  const username = req.session.username; // Make sure the session stores the username
+// router.post('/comment', ensuredLoggedIn, (req, res) => {
+//   const postId = req.body.postId;
+//   const content = req.body.content;
+//   const userId = req.session.user_id;
+//   const username = req.session.username; 
 
-  const userSql = `
-  SELECT * FROM users 
-  WHERE user_id = $1;
-  `;
+//   const userSql = `
+//   SELECT * FROM users 
+//   WHERE user_id = $1;
+//   `;
 
-  db.query(userSql, [userId], (errUser, dbResUser) => {
-    if (errUser) {
-      console.log(errUser)
-      return
-    }
-    const user = dbResUser.rows[0];
+//   db.query(userSql, [userId], (errUser, dbResUser) => {
+//     if (errUser) {
+//       console.log(errUser)
+//       return
+//     }
+//     const user = dbResUser.rows[0];
 
-    console.log('user', user)
+//     console.log('user', user)
 
-  const sql = `
-      INSERT INTO comments (post_id, user_id, username, comment_text, comment_date)
-      VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP)
-  `;
+//   const sql = `
+//       INSERT INTO comments (post_id, user_id, username, comment_text, comment_date)
+//       VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP)
+//   `;
 
-  db.query(sql, [postId, userId, username, content], (err) => {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    res.redirect(`/posts/${postId}`);
-  });
-});
+//   db.query(sql, [postId, userId, username, content], (err) => {
+//     if (err) {
+//       console.log(err);
+//       return;
+//     }
+//     res.redirect(`/posts/${postId}`);
+//   });
+// });
 
 
 //other pages of the blog website
-router.get('/about', function (req, res) {
-  const user = {
-    username: req.session.username,
-    email: req.session.email,
-    pronouns: req.session.pronouns,
-  }
-  res.render('about', { user });
-});
-
-router.get('/contact', function (req, res) {
-  const user = {
-    username: req.session.username,
-    email: req.session.email,
-    pronouns: req.session.pronouns,
-  }
-  res.render('contact', { user });
-});
-
-router.post('/contact', (req, res) => {
-  const { name, email, message } = req.body;
-
-  const sql = `
-    INSERT INTO contacts (name, email, message)
-    VALUES ($1, $2, $3)
-    RETURNING id;
-  `;
-
-  db.query(sql, [name, email, message], (err, dbRes) => {
-    if (err) {
-      console.log(err);
-      return;
-    }
-
-    const contactId = dbRes.rows[0].id;
-    console.log(`Inserted contact with ID: ${contactId}`);
-    res.status(200).send('Form submitted successfully');
-  });
-});
-}); 
-
 
 module.exports = router

@@ -5,6 +5,7 @@ const app = express();
 const port = process.env.PORT || 8800;
 const flash = require('connect-flash');
 const format = require('date-fns/format');
+const path = require('path');
 
 const indexRouter = require('./routes/index')
 const postsRouter = require('./routes/posts')
@@ -22,7 +23,7 @@ const ensuredLoggedIn = require('./middlewares/ensured_logged_in')
 const requestLogger = require('./middlewares/request_logger')
 const requestToDeleteMethod = require('./middlewares/request_to_delete')
 
-// app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(flash());
 
@@ -41,8 +42,6 @@ app.use(methodOverride(function (req, res) {
     return method
   }
 }))
-app.use(cookieParser());
-
 app.use(cookieParser());
 
 app.use(requestLogger)
