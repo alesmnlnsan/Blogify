@@ -12,4 +12,28 @@
         </p>
       </div>
     </a>
-  </div> 
+</div> 
+
+<h3>Leave a Comment</h3>
+<form action="/comments" method="post">
+  <input type="hidden" name="post_id" value="<%= post.post_id %>">
+  <label for="content">Comment</label><br>
+  <textarea name="content" id="content" required></textarea>
+  <br>
+  <button type="submit">Submit Comment</button>
+</form>
+
+<div class="comments-section">
+  <% comments.forEach(comment => { %>
+    <div class="comment">
+      <p><%= comment.username %>: <%= comment.comment_text %> 
+        <br><span class="comment-date"><%= comment.comment_date %></span></p>
+      <% if (user && user.user_id === comment.user_id) { %>
+        <form action="/comments/<%= comment.comment_id %>?_method=DELETE" method="post">
+          <input type="hidden" name="_method" value="delete">
+          <button type="submit">Delete</button>
+        </form>
+      <% } %>
+    </div>
+  <% }) %>
+</div>

@@ -131,7 +131,11 @@ router.put('/posts/:id', (req, res) => {
 router.delete('/posts/:id', ensuredLoggedIn, (req, res) => {
   const postId = req.params.id;
 
-  const sql = 'DELETE FROM posts WHERE post_id = $1;';
+  const sql = `
+  DELETE FROM posts 
+  WHERE post_id = $1;
+  `;
+
   db.query(sql, [postId], (err, dbRes) => {
     if (err) {
       console.error(err);
@@ -143,41 +147,53 @@ router.delete('/posts/:id', ensuredLoggedIn, (req, res) => {
 });
 
 
-// router.post('/comment', ensuredLoggedIn, (req, res) => {
-//   const postId = req.body.postId;
-//   const content = req.body.content;
-//   const userId = req.session.user_id;
-//   const username = req.session.username; 
+router.post('/comments', ensuredLoggedIn, (req, res) => {
+  const { post_id, content } = req.body;
+  const { user_id, username } = req.session; 
 
-//   const userSql = `
-//   SELECT * FROM users 
-//   WHERE user_id = $1;
-//   `;
+  const sql = `
+    INSERT INTO comments (post_id, user_id, username, comment_text, comment_date)
+    VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP)
+    RETURNING *; 
+  `;
 
-//   db.query(userSql, [userId], (errUser, dbResUser) => {
-//     if (errUser) {
-//       console.log(errUser)
-//       return
-//     }
-//     const user = dbResUser.rows[0];
-
-//     console.log('user', user)
-
-//   const sql = `
-//       INSERT INTO comments (post_id, user_id, username, comment_text, comment_date)
-//       VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP)
-//   `;
-
-//   db.query(sql, [postId, userId, username, content], (err) => {
-//     if (err) {
-//       console.log(err);
-//       return;
-//     }
-//     res.redirect(`/posts/${postId}`);
-//   });
-// });
+  db.query(sql, [post_id, user_id, username, content], (err, dbRes) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Database error.');
+    }
+    
+    res.redirect(`/posts/${post_id}`);
+  });
+});
 
 
-//other pages of the blog website
+router.delete('/comments/:id', ensuredLoggedIn, (req, res) => {
+  const comment_id = parseInt(req.params.id);
+  const getPostIdSql = 'SELECT post_id FROM comments WHERE comment_id = $1;';
+    
+  db.query(getPostIdSql, [comment_id], (err, dbRes) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Database error.');
+    }
+    if (dbRes.rows.length === 0) {
+      return res.status(404).send('Comment not found.');
+    }
+    
+    const post_id = dbRes.rows[0].post_id;
 
-module.exports = router
+    const deleteSql = 'DELETE FROM comments WHERE comment_id = $1;';
+    db.query(deleteSql, [comment_id], (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send('Database error.');
+      }
+      res.redirect(`/posts/${post_id}`); 
+    });
+  });
+});
+
+
+
+module.exports = router;
