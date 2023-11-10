@@ -109,6 +109,7 @@ router.post('/signup', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const pronouns = req.body.pronouns;
+  const user_icon_url = req.body.user_icon_url;
 
   if (!password) {
     return res.status(400).send('Password is required.');
@@ -120,8 +121,8 @@ router.post('/signup', (req, res) => {
       return res.status(500).send('Hashing error during signup.');
     }
 
-    const sql = 'INSERT INTO users (username, email, password_digest, pronouns) VALUES ($1, $2, $3, $4);';
-    db.query(sql, [username, email, hashedPassword, pronouns], (err, dbRes) => {
+    const sql = 'INSERT INTO users (username, email, password_digest, pronouns, user_icon_url) VALUES ($1, $2, $3, $4, $5);'
+    db.query(sql, [username, email, hashedPassword, pronouns, user_icon_url], (err, dbRes) => {
       if (err) {
         console.error("Signup error:", err);
         return res.status(500).send('Database error during signup.');
@@ -130,6 +131,24 @@ router.post('/signup', (req, res) => {
     });
   });
 });
+
+// router.post('/update-icon', (req, res) => {
+//   const username = req.session.username;
+//   const newIconUrl = req.body.user_icon_url; 
+
+//   if (!newIconUrl) {
+//     return res.status(400).send('New icon URL is required.');
+//   }
+
+//   const sql = 'UPDATE users SET user_icon_url = $1 WHERE username = $2;';
+//   db.query(sql, [newIconUrl, username], (err, dbRes) => {
+//     if (err) {
+//       console.error("Update icon error:", err);
+//       return res.status(500).send('Database error during icon update.');
+//     }
+//     res.redirect('/profile'); 
+//   });
+// });
 
 //------------------------++ ABOUT and CONTACT
 router.get('/about', function (req, res) {

@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  background-color: white;
 }
 
 /* Header */
@@ -9,6 +10,8 @@ header {
   padding: 10px;
   display: flex;
   align-items: center;
+  font-family: 'Agbalumo', sans-serif;
+  font-size: 20px;
 }
 
 .logo-name {
@@ -48,21 +51,56 @@ header {
   text-align: center;
 }
 
-.form {
+.sign-up-form {
+  width: 50%;
   margin: auto;
+  margin-top: 20px;
+  padding: 20px;
+  border: 5px solid #ff75ae;
+  border-radius: 10px;
+  background-color: #ffffff;
+  font-family: 'Agbalumo', sans-serif;
+  text-align: center;
+  color: #d970ee;
+  font-size: 15px;
+}
+
+.form {
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
-.form>div {
-  display: flex;
-  align-items: center;
+.form div {
+  margin: 10px 0;
 }
 
-.form>div>label {
-  width: 120px;
-  display: flex;
+.form label {
+  display: block;
+  font-weight: bold;
+}
+
+.form input[type='email'],
+.form input[type='text'],
+.form input[type='password'] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.form button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  background-color: #ff75ae;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+.form button:hover {
+  background-color: #ff39ad;
 }
 
 input,
@@ -73,7 +111,7 @@ textarea {
   box-sizing: border-box;
   font-size: 15px;
   border-radius: 4px;
-  border: 1px solid #333333; /* Gray */
+  border: 1px solid #997373; /* Gray */
 }
 
 textarea {
@@ -143,6 +181,12 @@ button {
 
 .signUp {
   margin-top: 20px;
+}
+
+.sign-up-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Blog */

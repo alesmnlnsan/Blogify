@@ -2,9 +2,15 @@
 
 <div class="center_content">
   <h2>User Profile</h2>
-  <% if (user && user.image_url) { %>
-    <img src="<%= user.image_url %>" alt="">
+  <% if (user && user.user_icon_url) { %>
+    <img src="<%= user.user_icon_url %>" alt="User Icon">
   <% } %>
+  <!-- <form action="/update-icon" method="post">
+    <label for="user_icon_url">New Icon URL:</label>
+    <input type="text" id="user_icon_url" name="user_icon_url">
+    <input type="submit" value="Update Icon">
+  </form>
+   -->
   <div class="user_details">
     <% if (user) { %>
       <p><strong>Name:</strong> <%= user.username %></p>

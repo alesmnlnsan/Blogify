@@ -16,7 +16,8 @@ CREATE TABLE users (
     username TEXT,
     email TEXT,
     password_digest TEXT,
-    pronouns TEXT
+    pronouns TEXT,
+    user_icon_url TEXT
 );
 
 CREATE TABLE todos (
