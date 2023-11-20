@@ -1,22 +1,49 @@
 <%- include ('./partials/header') %>
-  <!-- <h1>Home dashboard</h1> -->
 
+<div class="container">
   <% if (typeof posts !== 'undefined' && posts.length > 0) { %>
+    <div class="side-bar">
+      <!-- <h2 class="notice">
+        <strong>Notice:</strong> This is a demo site. Any posts made here are not real and are only for demonstration purposes. Categories for posts to come!!
+      </h2> -->
+      <% if (typeof recentPosts !== 'undefined' && recentPosts.length > 0) { %>
+        <h3 class="recent-posts-title">RECENT POSTS:</h3>
+        <ul class="recent-posts-list">
+          <% recentPosts.forEach((recentPost) => { %>
+            <li>
+              <a href="/posts/<%= recentPost.post_id %>">
+                <%= recentPost.title %>
+              </a>
+            </li>
+          <% }) %>
+        </ul>
+      <% } %>
+      <div class="second-side">
+        <h2 class="second-side">WARNING!</h2>
+        <p class="second-side">This is a project I made during my studies with the General Assembly Software Engineering Intensive bootcamp. This is not a real blog and the posts are not real. This is only a demo site! ˚₊‧꒰ა ☆ ໒꒱ ‧₊˚
+          <br>
+          ૮꒰ ˶• ༝ •˶꒱ა ♡</p>
+      </div>
+    </div>
     <div class="blog-wrapper">
-      <% posts.forEach((post)=> { %>
-        <a href="/posts/<%= post.post_id %>">
-          <img src="<%= post.image_url %>" alt="">
+      <% posts.forEach((post) => { %>
+        <a href="/posts/<%= post.post_id %>" class="ui-card">
+          <div class="card-image" style="background-image: url('<%= post.image_url %>');">
+            <h2 class="title-content"><%= post.title %></h2>
+          </div>
           <div class="content">
-            <h2>
-              <%= post.title %>
-            </h2>
-            <p>
-              <%= post.content %>
-            </p>
-            <p><strong>Author:</strong> <%= post.author_name %></p>
-            <p><strong>Publication Date:</strong>
-              <%= format(new Date(post.publication_date), 'dd MMM yyyy') %>
-            </p>
+            <% let words = post.content.split(' '); %>
+            <% if (words.length > 30) { %>
+              <p class="info">"<%= words.slice(0, 30).join(' ') %>... <a href="/posts/<%= post.post_id %>">See More</a></p>
+            <% } else { %>
+              <p class="info">"<%= post.content %>"</p>
+            <% } %>
+            <div class="user-info">
+              <p class="author"><strong>Author:</strong> <%= post.author_name %></p>
+              <p class="date"><strong>Publication Date:</strong>
+                <%= format(new Date(post.publication_date), 'dd MMM yyyy') %>
+              </p>
+            </div>
           </div>
         </a>
       <% }) %>
@@ -24,3 +51,4 @@
   <% } else { %>
     <p>No posts found.</p>
   <% } %>
+</div>

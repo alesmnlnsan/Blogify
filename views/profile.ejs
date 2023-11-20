@@ -1,42 +1,45 @@
 <%- include ('./partials/header') %>
 
-<div class="center_content">
-  <h2>User Profile</h2>
-  <% if (user && user.user_icon_url) { %>
-    <img src="<%= user.user_icon_url %>" alt="User Icon">
-  <% } %>
-  <!-- <form action="/update-icon" method="post">
-    <label for="user_icon_url">New Icon URL:</label>
-    <input type="text" id="user_icon_url" name="user_icon_url">
-    <input type="submit" value="Update Icon">
-  </form>
-   -->
-  <div class="user_details">
-    <% if (user) { %>
-      <p><strong>Name:</strong> <%= user.username %></p>
-      <p><strong>Email:</strong> <%= user.email %></p>
-      <p><strong>Pronouns:</strong> <%= user.pronouns %></p>
+<div class="profile-wrapper">
+  <div class="center_content">
+    <h2>User Profile</h2>
+    <% if (user && user.user_icon_url) { %>
+      <img src="<%= user.user_icon_url %>" alt="User Icon">
     <% } %>
-  </div>
-</div>
-
-<button onclick="window.open('/posts/create')"> Create New Post</button>
-
-<h2>My Posts</h2>
-
-<div class="blog-wrapper">
-  <% posts.forEach((post)=> { %>
-    <div>
-      <img src="<%= post.image_url %>" alt="">
-      <div class="content">
-        <h3><%= post.title %></h3>
-        <p><%= post.content %></p>
-        <p>By <span class="you">YOU</span> on <%= post.created_at.toDateString() %></p>
-        <a href="/posts/edit/<%= post.post_id %>"><button>Edit</button></a>
-        <form action="/posts/<%= post.post_id %>?_method=DELETE" method="post">
-          <button type="submit">Delete</button>
-        </form>
-      </div>
+    <!-- <form action="/update-icon" method="post">
+      <label for="user_icon_url">New Icon URL:</label>
+      <input type="text" id="user_icon_url" name="user_icon_url">
+      <input type="submit" value="Update Icon">
+    </form>
+     -->
+    <div class="user_details">
+      <% if (user) { %>
+        <p><strong>Name:</strong> <%= user.username %></p>
+        <p><strong>Email:</strong> <%= user.email %></p>
+        <p><strong>Pronouns:</strong> <%= user.pronouns %></p>
+      <% } %>
     </div>
-  <% }) %>
+  </div>
+  
+  <button onclick="window.open('/posts/create')">Create New Post</button>
+  
+  <div class="profile-blog-wrapper">
+    <h2 class="posts-header">My Posts</h2>
+    <div class="posts-grid">
+      <% posts.forEach((post)=> { %>
+        <div class="post-item">
+          <img src="<%= post.image_url %>" alt="">
+          <div class="content">
+            <h3><%= post.title %></h3>
+            <p><%= post.content %></p>
+            <p>By <span class="you">YOU</span> on <%= post.created_at.toDateString() %></p>
+            <a href="/posts/edit/<%= post.post_id %>"><button>Edit</button></a>
+            <form action="/posts/<%= post.post_id %>?_method=DELETE" method="post">
+              <button type="submit">Delete</button>
+            </form>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
 </div>

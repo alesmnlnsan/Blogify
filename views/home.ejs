@@ -3,14 +3,14 @@
   <div class="center_content" style="background-image: url('https://i.pinimg.com/originals/72/e0/33/72e0331a65ee23d18dbee80522a60d1a.gif'); background-size:auto;">  
     <% if (user && user.username) { %>
       <img src="https://i.pinimg.com/originals/92/80/c8/9280c89a46c1f8608041887a22b0438f.jpg">
-      <p>Welcome, <%= user.username %>!</p>
+      <p class="welcome-user">Welcome, <%= user.username %>!</p>
     <% } else { %>
-      <img src="https://i1.sndcdn.com/artworks-000659712550-mcpel4-t500x500.jpg" class="" />
-      <p>Welcome, guest!</p>
+      <img src="https://i.pinimg.com/originals/dc/c4/d0/dcc4d0e0fd55b7bfe15763f89f0e7124.gif" class="" />
+      <p class="welcome">Welcome, guest!</p>
       <p class="description">Welcome to Blogify! This app was created by Alessandra Manalansan as a second project for the General Assembly Software Engineering Immersive course. With Blogify, you can easily sign up, create and publish any blog post you desire. Additionally, you can have a sense of community with the comments section where you can leave reviews and communicate with your fellow bloggers. </p>
-      <p class="description">To get started, click the button below to sign up!</p>
+      <p class="home-signup">To get started, click the button below to sign up!</p>
         <button onclick="window.open('/signup','_self')" style="margin: auto; display: flex; justify-content: center;">Sign Up</button>
-      <p>Already have an account? <a href="/login">Login here!</a></p>
+      <p class="home-login">Already have an account? <a href="/login">Login here!</a></p>
     <% } %>
   
   </div>

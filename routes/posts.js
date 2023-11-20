@@ -4,35 +4,82 @@ const db = require('../db')
 const ensuredLoggedIn = require('../middlewares/ensured_logged_in')
 const format = require('date-fns/format');
 
+// router.get('/posts', (req, res) => {
+//   const sql = `
+//       SELECT posts.*, users.username AS author_name 
+//       FROM posts 
+//       JOIN users ON posts.author_id = users.user_id;
+//   `;
+
+//   db.query(sql, (err, dbRes) => {
+//     if (err) {
+//       console.log(err);
+//       return;
+//     }
+//     const posts = dbRes.rows;
+
+//     const user = {
+//       username: req.session.username,
+//       email: req.session.email,
+//       pronouns: req.session.pronouns,
+//     }
+
+//     console.log('sess', req.session)
+//     res.render('posts', { posts: posts, user, format });
+//   });
+// });
+
 router.get('/posts', (req, res) => {
-  const sql = `
-      SELECT posts.*, users.username AS author_name 
-      FROM posts 
-      JOIN users ON posts.author_id = users.user_id;
+  // Fetch all posts
+  const sqlPosts = `
+    SELECT posts.*, users.username AS author_name 
+    FROM posts 
+    JOIN users ON posts.author_id = users.user_id;
   `;
 
-  db.query(sql, (err, dbRes) => {
+  db.query(sqlPosts, (err, dbRes) => {
     if (err) {
       console.log(err);
-      return;
+      return res.status(500).send('Database error.');
     }
+
     const posts = dbRes.rows;
 
-    const user = {
-      username: req.session.username,
-      email: req.session.email,
-      pronouns: req.session.pronouns,
-    }
+    // Fetch recent posts (modify the query based on your definition of "recent")
+    const sqlRecentPosts = `
+      SELECT post_id, title
+      FROM posts
+      ORDER BY created_at DESC
+      LIMIT 5;  -- Adjust the limit as needed
+    `;
 
-    console.log('sess', req.session)
-    res.render('posts', { posts: posts, user, format });
+    db.query(sqlRecentPosts, (err, recentPostsRes) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send('Database error.');
+      }
+
+      const recentPosts = recentPostsRes.rows;
+
+      // Render the 'posts' template with posts and recentPosts
+      const user = {
+        username: req.session.username,
+        email: req.session.email,
+        pronouns: req.session.pronouns,
+      };
+
+      res.render('posts', { posts, user, recentPosts, format });
+    });
   });
 });
+
+
 
 router.get('/posts/create', (req, res) => {
   // console.log('req.session', req.session)
   res.render('new_blog')
 })
+
 
 router.post('/posts', ensuredLoggedIn, (req, res) => {
   let title = req.body.title

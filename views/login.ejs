@@ -1,19 +1,20 @@
 <%- include ("./partials/header") %>
 
-  <h2 class="center-text">Login</h2>
-
+<div class="sign-up-form">
   <form class="form" action="/login" method="post">
-    <div>
-      <label for="email">Email</label>
-      <input type="email" name="email">
-    </div>
-    <div>
-      <label for="password">Password</label>
-      <input type="password" name="password">
-    </div>
-    <div>
-      <button type="submit">Login</button>
-    </div>
-  </form>
+      <h2 class="center-text">Login</h2>
+      <div>
+        <label for="email">Email</label>
+        <input type="email" name="email">
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input type="password" name="password">
+      </div>
+      <div>
+        <button type="submit">Login</button>
+      </div>
+    </form>
+</div>
 
   <p class="center-text">Not a member yet? <a href="/signup">Sign up here</a></p>
