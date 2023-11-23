@@ -18,10 +18,12 @@
     </div>
     <div style="display: flex; align-items: center; gap: 10px;">
       <% if (user && user.username) { %>
-        <div class="username-login" style="margin-left: 10px;">Logged in as: <%= user.username %></div>
-        <form action="/logout" method="post">
-          <button type="submit">Logout</button>
-        </form>
+        <div class="username-login" style="margin-left: 10px;">Logged in as: <span class="username-login"><%= user.username %></span></div>
+        <div class="logout-container">
+          <form action="/logout" method="post">
+            <button class="logout-button" type="submit">Logout</button>
+          </form>
+        </div>
       <% } else { %>
         <a href="/login" style="margin-left: 10px;">Login</a>
       <% } %>

@@ -73,8 +73,6 @@ router.get('/posts', (req, res) => {
   });
 });
 
-
-
 router.get('/posts/create', (req, res) => {
   // console.log('req.session', req.session)
   res.render('new_blog')

@@ -1,9 +1,15 @@
 <%- include ('./partials/header') %>
 
+<div class="edit-content">
   <div class="center_content" style="background-image: url('https://i.pinimg.com/originals/72/e0/33/72e0331a65ee23d18dbee80522a60d1a.gif'); background-size:auto;">  
     <% if (user && user.username) { %>
       <img src="https://i.pinimg.com/originals/92/80/c8/9280c89a46c1f8608041887a22b0438f.jpg">
       <p class="welcome-user">Welcome, <%= user.username %>!</p>
+      <div class="bored-api">
+        <p class="bored-api-description">Feeling bored? Click the button below to get a random activity to do! (´｡• ᵕ •｡`) </p>
+        <button onclick="getActivity()" style="margin: auto; display: flex; justify-content: center;">Get Activity</button>
+        <p id="activity"></p>
+      </div>
     <% } else { %>
       <img src="https://i.pinimg.com/originals/dc/c4/d0/dcc4d0e0fd55b7bfe15763f89f0e7124.gif" class="" />
       <p class="welcome">Welcome, guest!</p>
@@ -12,8 +18,18 @@
         <button onclick="window.open('/signup','_self')" style="margin: auto; display: flex; justify-content: center;">Sign Up</button>
       <p class="home-login">Already have an account? <a href="/login">Login here!</a></p>
     <% } %>
-  
   </div>
+</div>
 
-
- 
+<script>
+function getActivity() {
+  fetch('https://www.boredapi.com/api/activity/')
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('activity').textContent = data.activity;
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+</script>

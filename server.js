@@ -2,7 +2,8 @@ require('dotenv').config()
 
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 9000;
+const port = process.env.PORT || 3000;
+const axios = require('axios');
 const flash = require('connect-flash');
 const format = require('date-fns/format');
 const path = require('path');
