@@ -1,15 +1,6 @@
 CREATE DATABASE blog_app;
 
 -- TABLES
-CREATE TABLE posts (
-    post_id SERIAL PRIMARY KEY,
-    title VARCHAR(100) NOT NULL,
-    content TEXT NOT NULL,
-    image_url VARCHAR(300),
-    author_id INTEGER NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW(),
-    FOREIGN KEY (author_id) REFERENCES users(user_id)
-);
 
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
@@ -18,6 +9,16 @@ CREATE TABLE users (
     password_digest TEXT,
     pronouns TEXT,
     user_icon_url TEXT
+);
+
+CREATE TABLE posts (
+    post_id SERIAL PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    content TEXT NOT NULL,
+    image_url VARCHAR(300),
+    author_id INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    FOREIGN KEY (author_id) REFERENCES users(user_id)
 );
 
 CREATE TABLE todos (
