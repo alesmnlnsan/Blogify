@@ -32,10 +32,11 @@ const format = require('date-fns/format');
 router.get('/posts', (req, res) => {
   // Fetch all posts
   const sqlPosts = `
-    SELECT posts.*, users.username AS author_name 
-    FROM posts 
-    JOIN users ON posts.author_id = users.user_id;
-  `;
+  SELECT posts.*, users.username AS author_name 
+  FROM posts 
+  JOIN users ON posts.author_id = users.user_id
+  ORDER BY posts.publication_date DESC;
+`;
 
   db.query(sqlPosts, (err, dbRes) => {
     if (err) {

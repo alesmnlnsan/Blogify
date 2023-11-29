@@ -1,6 +1,7 @@
 <%- include ('./partials/header') %>
 
 <div class="container">
+  <button onclick="location.href='/posts/new'" style="margin-bottom: 20px;">Create a New Post</button>
   <% if (typeof posts !== 'undefined' && posts.length > 0) { %>
     <div class="side-bar">
       <!-- <h2 class="notice">

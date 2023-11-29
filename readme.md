@@ -8,7 +8,7 @@
 - **Blog Posts**: Create, read, update, and delete your articles with ease.
 - **Engaging Interactions**: Dive into a community of bloggers. Comment on posts, start conversations, and build connections.
 
-#### [CHECK IT OUT HERE!](https://blogify-xv6z.onrender.com/)
+#### [CHECK IT OUT HERE!](https://blogify-alessandramanalansan.onrender.com)
 
 ## Design
 
