@@ -113,6 +113,48 @@ header {
   animation: bounce 3s ease infinite; 
 }
 
+.weather-info {
+  padding: 20px;
+  background-color: white;
+  border: 3px solid rgb(250, 118, 171);
+  border-radius: 10px;
+  font-size: 24px;
+  text-align: center;
+  margin: 20px 0;
+  padding: 20px;
+  color: #333;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+}
+
+.weather-heading {
+  font-family: 'Agbalumo', sans-serif;
+  font-size: 28px;
+  color: #7c368a; /* Purple */
+  text-shadow: -1px -1px 4px rgba(255, 87, 154, 1);
+  margin-bottom: 15px;
+}
+
+.weather-description {
+  font-family: 'Garamond', sans-serif;
+  font-size: 20px;
+  margin-top: 10px;
+  word-spacing: 5px;
+  text-align: center;
+  text-shadow: 2px 1px 18px rgba(255, 87, 154, 1);
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
 @keyframes bounce {
   0%, 20%, 50%, 80%, 100% {
     transform: translateY(0);
@@ -472,7 +514,43 @@ button:hover {
   display: flex;
 }
 
+.create-post-button {
+  flex-wrap: wrap;
+  background: linear-gradient(0deg, #ff81b6 0%, #ffffff 100%);
+  color: rgb(0, 0, 0);
+  padding: 15px;
+  border: none;
+  cursor: pointer; 
+  text-align: center;
+  margin-bottom: 20px;
+  /* curve */
+  /* --mask:
+    radial-gradient(38.42px at calc(100% - 54.00px) 50%,#000 99%,#0000 101%) 0 calc(50% - 60px)/100% 120px,
+    radial-gradient(38.42px at calc(100% + 24.00px) 50%,#0000 99%,#000 101%) calc(100% - 30px) 50%/100% 120px repeat-y;
+  -webkit-mask: var(--mask);
+          mask: var(--mask); */
+}
+
+.create-post-button h2 {
+  font-size: 1.5em; 
+  margin-bottom: 10px;
+  background-color: transparent;
+}
+
+.create-post-button button {
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  background-color: #ff75ae;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  font-size: 15px;
+  font-family: 'Agbalumo', sans-serif;
+  min-width: 80px; 
+}
+
 .blog-wrapper {
+  margin-top: 50px;
   flex: 1;
   display: flex;
   flex-wrap: wrap;
@@ -500,19 +578,21 @@ button:hover {
 /* SIDEBAR */
 .side-bar,
 .second-side {
-  flex: 0 0 25%;
+  flex-wrap: wrap;
   padding: 20px;
   width: 100%;
   position: relative;
   height: max-content;
+  max-width: 30%;
   background-color: pink;
   padding: 42px;
   overflow: auto;
 }
 
 .second-side {
-  flex: 0 0 25%; 
-  padding: 10px;
+  flex-wrap: wrap;
+  max-width: 100%;
+  padding: 20px;
   background-color: transparent; 
   font-family: 'agbalumo', sans-serif;
   font-size: 17px;

@@ -5,6 +5,13 @@
     <% if (user && user.username) { %>
       <img src="https://i.pinimg.com/originals/92/80/c8/9280c89a46c1f8608041887a22b0438f.jpg">
       <p class="welcome-user">Welcome, <%= user.username %>!</p>
+      <div class="weather-info">
+        <div class="weather-heading">Today's Weather</div>
+        <p class="weather-description">
+          Temperature: 25°C<br>
+          Description: Partly Cloudy
+        </p>
+      </div>
       <div class="bored-api">
         <p class="bored-api-description">Feeling bored? Click the button below to get a random activity to do! (´｡• ᵕ •｡`) </p>
         <button onclick="getActivity()" style="margin: auto; display: flex; justify-content: center;">Get Activity</button>
@@ -32,4 +39,32 @@ function getActivity() {
       console.error('Error:', error);
     });
 }
+
+function getWeather(latitude, longitude) {
+  const apiKey = '84c6b790957c191d682820f7b9b29a89';
+  const url = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
+
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      const temperature = data.main.temp;
+      const description = data.weather[0].description;
+      document.getElementById('weather').textContent = `Temperature: ${temperature}, Weather: ${description}`;
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(position => {
+      getWeather(position.coords.latitude, position.coords.longitude);
+    });
+  } else {
+    document.getElementById('weather').textContent = 'Geolocation is not supported by this browser.';
+  }
+}
+
+getLocation();
 </script>

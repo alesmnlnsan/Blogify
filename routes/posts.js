@@ -112,7 +112,7 @@ router.get('/posts/edit/:id', (req, res) => {
 
   db.query(sql, [req.params.id], (err, dbRes) => {
     let post = dbRes.rows[0]
-    res.render('edit', { post: post })
+    res.render('new_blog', { post: post })
   })
 })
 

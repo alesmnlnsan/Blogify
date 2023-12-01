@@ -1,12 +1,8 @@
 <%- include ('./partials/header') %>
 
 <div class="container">
-  <button onclick="location.href='/posts/new'" style="margin-bottom: 20px;">Create a New Post</button>
   <% if (typeof posts !== 'undefined' && posts.length > 0) { %>
     <div class="side-bar">
-      <!-- <h2 class="notice">
-        <strong>Notice:</strong> This is a demo site. Any posts made here are not real and are only for demonstration purposes. Categories for posts to come!!
-      </h2> -->
       <% if (typeof recentPosts !== 'undefined' && recentPosts.length > 0) { %>
         <h3 class="recent-posts-title">RECENT POSTS:</h3>
         <ul class="recent-posts-list">
@@ -27,6 +23,12 @@
       </div>
     </div>
     <div class="blog-wrapper">
+      <% if (user && user.username) { %>
+        <div class="create-post-button">
+          <h2 style="font-family: 'Garamond';">Share your thoughts!</h2>
+          <button onclick="window.open('/posts/create')">Create New Post</button>
+        </div>
+      <% } %>
       <% posts.forEach((post) => { %>
         <a href="/posts/<%= post.post_id %>" class="ui-card">
           <div class="card-image" style="background-image: url('<%= post.image_url %>');">
@@ -34,8 +36,8 @@
           </div>
           <div class="content">
             <% let words = post.content.split(' '); %>
-            <% if (words.length > 30) { %>
-              <p class="info">"<%= words.slice(0, 30).join(' ') %>... <a href="/posts/<%= post.post_id %>">See More</a></p>
+            <% if (words.length > 50) { %>
+              <p class="info">"<%= words.slice(0, 50).join(' ') %>... <a href="/posts/<%= post.post_id %>">See More</a></p>
             <% } else { %>
               <p class="info">"<%= post.content %>"</p>
             <% } %>
