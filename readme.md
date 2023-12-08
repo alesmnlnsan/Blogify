@@ -27,6 +27,10 @@ I chose a basic blog app that is similar to a social media app that I enjoy usin
 ## Technologies Used
 - JavaScript, Node.js, PostgreSQL, Express, EJS, CSS
 
+## Demo
+
+<video src="img/blogify.mp4" controls title="Title"></video>
+
 ## Challenges
 
 I faced several challenges during the development of this website. The subject matter was quite challenging for me to grasp initially, and my site often crashed during development. I had difficulty with routing and rewriting. Due to time constraints and some gaps in my knowledge, I couldn't implement everything I had initially planned. However, I managed to complete the essential parts of the project, which is a significant achievement!
