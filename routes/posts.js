@@ -30,13 +30,16 @@ const format = require('date-fns/format');
 // });
 
 router.get('/posts', (req, res) => {
-  // Fetch all posts
+  const page = parseInt(req.query.page) || 1;
+  const postsPerPage = 9;
+  const offset = (page - 1) * postsPerPage;
+
   const sqlPosts = `
-  SELECT posts.*, users.username AS author_name 
-  FROM posts 
-  JOIN users ON posts.author_id = users.user_id
-  ORDER BY posts.publication_date DESC;
-`;
+    SELECT posts.*, users.username AS author_name 
+    FROM posts 
+    JOIN users ON posts.author_id = users.user_id
+    ORDER BY posts.publication_date DESC;
+  `;
 
   db.query(sqlPosts, (err, dbRes) => {
     if (err) {
@@ -44,9 +47,11 @@ router.get('/posts', (req, res) => {
       return res.status(500).send('Database error.');
     }
 
-    const posts = dbRes.rows;
+    const allPosts = dbRes.rows;
+    const totalPosts = allPosts.length;
+    const totalPages = Math.ceil(totalPosts / postsPerPage);
+    const posts = allPosts.slice(offset, offset + postsPerPage);
 
-    // Fetch recent posts (modify the query based on your definition of "recent")
     const sqlRecentPosts = `
       SELECT post_id, title
       FROM posts
@@ -62,17 +67,18 @@ router.get('/posts', (req, res) => {
 
       const recentPosts = recentPostsRes.rows;
 
-      // Render the 'posts' template with posts and recentPosts
       const user = {
         username: req.session.username,
         email: req.session.email,
         pronouns: req.session.pronouns,
       };
 
-      res.render('posts', { posts, user, recentPosts, format });
+      res.render('posts', { posts, user, recentPosts, format, page, totalPages });
     });
   });
 });
+
+
 
 router.get('/posts/create', (req, res) => {
   // console.log('req.session', req.session)

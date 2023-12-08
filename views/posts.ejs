@@ -17,7 +17,7 @@
       <% } %>
       <div class="second-side">
         <h2 class="second-side">WARNING!</h2>
-        <p class="second-side">This is a project I made during my studies with the General Assembly Software Engineering Intensive bootcamp. This is not a real blog and the posts are not real. This is only a demo site! ˚₊‧꒰ა ☆ ໒꒱ ‧₊˚
+        <p class="second-side">This is a project I made during my studies with the General Assembly Software Engineering Intensive boot camp. This is not a real blog and the posts are not real. This is only a demo site! ˚₊‧꒰ა ☆ ໒꒱ ‧₊˚
           <br>
           ૮꒰ ˶• ༝ •˶꒱ა ♡</p>
       </div>
@@ -51,6 +51,17 @@
         </a>
       <% }) %>
     </div>
+    <div class="pagination">
+      <% if (page > 1) { %>
+        <a href="/posts?page=<%= page - 1 %>">&lt; Previous</a>
+      <% } %>
+      
+      <span>Page <%= page %> of <%= totalPages %></span>
+    
+      <% if (page < totalPages) { %>
+        <a href="/posts?page=<%= page + 1 %>">Next &gt;</a>
+      <% } %>
+    </div>    
   <% } else { %>
     <p>No posts found.</p>
   <% } %>
