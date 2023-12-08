@@ -29,7 +29,11 @@ I chose a basic blog app that is similar to a social media app that I enjoy usin
 
 ## Demo
 
-<video src="img/Blogify%20-%20Made%20with%20Clipchamp.mp4" controls title="SiteDemo"></video>
+![User not logged in](img/demo/not-logged-in.gif)
+![Sign up](img/demo/sign-up-login.gif)
+![Logged in](img/demo/logged-in.gif)
+![Create a post & Leave a comment](img/demo/create-comment.gif)
+![Edit & Delete posts + About & Contact](img/demo/edit-delete.gif)
 
 ## Challenges
 
