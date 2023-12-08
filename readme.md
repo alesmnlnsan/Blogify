@@ -29,7 +29,7 @@ I chose a basic blog app that is similar to a social media app that I enjoy usin
 
 ## Demo
 
-<video src="img/blogify.mp4" controls title="Title"></video>
+<video src="img/Blogify%20-%20Made%20with%20Clipchamp.mp4" controls title="SiteDemo"></video>
 
 ## Challenges
 
